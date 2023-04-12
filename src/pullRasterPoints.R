@@ -19,6 +19,13 @@ pullRasterPoints <- function(digital.raster =NULL,
                              env.id=NULL,name.covariate = NULL, merge=TRUE){
   
   
+  message(paste0('========================================================================'))
+  message(paste0('EnvFeatures: democratizing the environmental data collection'))
+  message(paste0('Author: G. Costa-Neto'))
+  message(paste0('pullRasterPoints() function, v0.0.1'))
+  message(paste0('-========================================================================'))
+  
+  
   if (!requireNamespace("terra", quietly = TRUE)) {
     utils::install.packages("terra")
   }
