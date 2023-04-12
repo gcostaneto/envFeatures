@@ -12,25 +12,26 @@
 #'==================================================================================================
 
 
+
 pullRasterPoints <- function(digital.raster =NULL,
                              which.raster.number = NULL, 
                              lat =NULL, lng =NULL, env.dataframe=NULL,
                              env.id=NULL,name.covariate = NULL, merge=TRUE){
   
   
-   if (!requireNamespace("terra", quietly = TRUE)) {
+  if (!requireNamespace("terra", quietly = TRUE)) {
     utils::install.packages("terra")
   }
   if (!requireNamespace("raster", quietly = TRUE)) {
     utils::install.packages("raster")
   }
-
+  
   if (!requireNamespace("sp", quietly = TRUE)) {
     utils::install.packages("sp")
   }
   
- if(length(digital.raster) == 1 )  digital.raster <- digital.raster
- if(!is.null( which.raster.number )) 
+  if(length(digital.raster) == 1 )  digital.raster <- digital.raster
+  if(!is.null( which.raster.number )) 
   {
     digital.raster <- digital.raster[[ which.raster.number ]]
   }
@@ -40,15 +41,19 @@ pullRasterPoints <- function(digital.raster =NULL,
   if(is.null(lat)) message('provide the latitude column name for lat in env.dataframe')
   if(is.null(lng)) message('provide the longitude column name for lng in env.dataframe')
   if(is.null(env.id)) message('provide the environmental id column name for env.id in env.dataframe')
-
+  
   if(is.numeric(lat) & is.numeric(lng))
   {
     coords    <- data.frame(x = lng, y = lat)
   }
-
+  else{
+    coords    <- data.frame(x = env.dataframe[,lng], y = env.dataframe[,lat])
+  }
+  
+  
   sp_vector <- terra::vect(sp::SpatialPoints(coords))
   
-  if(isFALSE(class(raster_file)[1] == "SpatRaster")) digital.raster = terra::rast(digital.raster)
+  if(isFALSE(class(digital.raster)[1] == "SpatRaster")) digital.raster = terra::rast(digital.raster)
   extracted_values <- terra::extract(digital.raster , sp_vector)
   
   
@@ -70,6 +75,6 @@ pullRasterPoints <- function(digital.raster =NULL,
       }
     }
   }
-
+  
   return(extracted_values)
 }
