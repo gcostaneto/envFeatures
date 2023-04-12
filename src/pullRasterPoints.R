@@ -8,7 +8,7 @@
 #' Based on terra:extract()
 #' 
 #' pullRasterPoints()
-#' Package: envFeatures (current version 0.0.1,"beta" April 2023)
+#' Package: envFeatures (in developing, current version 0.0.1,"beta" April 2023)
 #'==================================================================================================
 
 
