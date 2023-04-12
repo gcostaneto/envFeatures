@@ -29,13 +29,13 @@ pullRasterPoints <- function(digital.raster =NULL,
     utils::install.packages("sp")
   }
   
-  
-  if(length(digital.raster) == 1 )  digital.raster <- digital.raster
-  if(!is.null( which.raster.number )) 
+ if(length(digital.raster) == 1 )  digital.raster <- digital.raster
+ if(!is.null( which.raster.number )) 
   {
     digital.raster <- digital.raster[[ which.raster.number ]]
   }
   
+  if(!is.null(name.covariate))  names(digital.raster) = name.covariate
   if(is.null(name.covariate)) name.covariate = names(digital.raster)
   if(is.null(lat)) message('provide the latitude column name for lat in env.dataframe')
   if(is.null(lng)) message('provide the longitude column name for lng in env.dataframe')
