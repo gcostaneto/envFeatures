@@ -18,6 +18,18 @@ pullRasterPoints <- function(digital.raster =NULL,
                                     env.id=NULL,name.covariate = NULL,merge=TRUE){
   
   
+   if (!requireNamespace("terra", quietly = TRUE)) {
+    utils::install.packages("terra")
+  }
+  if (!requireNamespace("raster", quietly = TRUE)) {
+    utils::install.packages("raster")
+  }
+
+  if (!requireNamespace("sp", quietly = TRUE)) {
+    utils::install.packages("sp")
+  }
+  
+  
   if(length(digital.raster) == 1 )  digital.raster <- digital.raster
   if(!is.null( which.raster.number )) 
   {
