@@ -14,8 +14,8 @@
 
 pullRasterPoints <- function(digital.raster =NULL,
                              which.raster.number = NULL, 
-                             lat =NULL, lng =NULL,env.dataframe=NULL,
-                                    env.id=NULL,name.covariate = NULL,merge=TRUE){
+                             lat =NULL, lng =NULL, env.dataframe=NULL,
+                             env.id=NULL,name.covariate = NULL, merge=TRUE){
   
   
    if (!requireNamespace("terra", quietly = TRUE)) {
