@@ -57,7 +57,7 @@ pullRasterPoints <- function(digital.raster =NULL,
     coords    <- data.frame(x = env.dataframe[,lng], y = env.dataframe[,lat])
   }
   
-  
+  sp::proj4string(  coords) = sp::CRS("+proj=longlat +datum=WGS84") 
   sp_vector <- terra::vect(sp::SpatialPoints(coords))
   
   if(isFALSE(class(digital.raster)[1] == "SpatRaster")) digital.raster = terra::rast(digital.raster)
