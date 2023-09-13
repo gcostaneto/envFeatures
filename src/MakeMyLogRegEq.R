@@ -1,7 +1,7 @@
 # Code to make formula for logReg model
 # updated at April 2023
 
-MakeMyLogRegEq = function(Y,X_tested=NULL, X_X_covariates=NULL)
+MakeMyLogRegEq = function(Y,X_tested=NULL, X_covariates=NULL)
 {
   Y = Y
   X = 0
