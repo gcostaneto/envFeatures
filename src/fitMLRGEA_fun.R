@@ -30,11 +30,11 @@ fitMLRGEA <- function(home.path = NULL,  # home directory. If null, getwd()
   
   if(isTRUE(verbose))
   {
-    message(paste0('========================================================================'))
+    message(paste0('============================================================================='))
     message(paste0('Multinomial Logistic Regresion for Genomic-Environment Associations (MLR-GEA)'))
     #  message(paste0('Author: G. Costa-Neto'))
-    message(paste0('fitMLRGEA() function, v0.0.3 (Sep 22 2023)'))
-    message(paste0('-========================================================================'))
+    message(paste0('fitMLRGEA() function, v0.0.2 (Sep 15 2023)'))
+    message(paste0('-===========================================================================','\n'))
     
   }
   
@@ -78,8 +78,8 @@ fitMLRGEA <- function(home.path = NULL,  # home directory. If null, getwd()
   # Building the Models     #####
   #'-------------------------------------------------------------------------------------------------
   
-
-  message(paste0('Start checking data at ......', Sys.time(),'\n'))
+  message(paste0('Start at................', Sys.time()))
+  message(paste0('1. Data Check ..........', Sys.time()))
   
   if(is.null( envo_X))
   { 
@@ -92,17 +92,17 @@ fitMLRGEA <- function(home.path = NULL,  # home directory. If null, getwd()
     {
       if(is.numeric(envo_X))
       {
-        message('Warning: unique  envo_X. Renamed as "envCOV" ')
+        message('   Warning: unique  envo_X. Renamed as "envCOV" ')
         
         envo_X <- data.frame(envCOV = envo_X)
         if(isFALSE(is.null(rownames(geno_Y))))
         {
-          message('Warning: rownames(envo_X) <- rownames(geno_Y)')
+          message('   Warning: rownames(envo_X) <- rownames(geno_Y)')
           rownames(envo_X) <- rownames(geno_Y)
         }
         if(isTRUE(is.null(rownames(geno_Y))))
         {
-          stop('You need to specify the rownames (taxa) for geno_Y')
+          stop('   You need to specify the rownames (taxa) for geno_Y')
         }
       }
     }
@@ -118,17 +118,17 @@ fitMLRGEA <- function(home.path = NULL,  # home directory. If null, getwd()
     {
       if(is.numeric(geno_X))
       {
-        message('Warning: uniquegeno_X. Renamed as "genoCOV" ')
+        message('   Warning: uniquegeno_X. Renamed as "genoCOV" ')
         
         geno_X <- data.frame(genoCOV = geno_X)
         if(isFALSE(is.null(rownames(geno_Y))))
         {
-          message('Warning: rownames(envo_X) <- rownames(geno_Y)')
+          message('   Warning: rownames(envo_X) <- rownames(geno_Y)')
           rownames(envo_X) <- rownames(geno_Y)
         }
         if(isTRUE(is.null(rownames(geno_Y))))
         {
-          stop('You need to specify the rownames (taxa) for geno_Y')
+          stop('   You need to specify the rownames (taxa) for geno_Y')
         }
       }
     }
@@ -159,8 +159,6 @@ fitMLRGEA <- function(home.path = NULL,  # home directory. If null, getwd()
   
   if(is.null(geno_X))
   {
-    message("Not running H3 -- no geno_X available")
-    
 #   common_rows <- 
 #      base::intersect(rownames(geno_Y),rownames( envo_X))
     
@@ -182,34 +180,45 @@ fitMLRGEA <- function(home.path = NULL,  # home directory. If null, getwd()
     
   }
   
+  message(paste0('Done!...................', Sys.time()))
+ # message(paste0('........................................................................'))
   
   n.geno.features  = ncol(geno_Y )
   
   #detectCores()
-  
-  if(is.null( n.core))
+  message(paste0('2. makeCluster..........', Sys.time()))
+  if(isTRUE(parallel))
   {
-    if(isTRUE(parallel))
+    if(is.null( n.core))
     {
-      cl <- parallel::makeCluster(detectCores() - 1)
+      if(isTRUE(parallel))
+      {
+        cl <- parallel::makeCluster(detectCores() - 1)
+        doParallel::registerDoParallel(cl)
+      }
+    }
+    if(!is.null(n.core))
+    {
+      cl <-  parallel::makeCluster(n.core)
       doParallel::registerDoParallel(cl)
     }
+    message(paste0('   threads = ',n.core))
   }
-  if(!is.null(n.core))
+  if(isFALSE(parallel))
   {
-    cl <-  parallel::makeCluster(n.core)
-    doParallel::registerDoParallel(cl)
+    message(paste0('   parallel = FALSE',n.core))
   }
+  message(paste0('Done!...................', Sys.time()))
   
-  message(paste0('End checking data at ......', Sys.time(),'\n'))
-  
+
+
   #'-------------------------------------------------------------------------------------------------
   # Running the models     #####
   #'-------------------------------------------------------------------------------------------------
   
   
   start = Sys.time()
-  message(paste0('Model started at ......',start,'\n'))
+  message(paste0('3. Running MLR .........',start))
   
   
   output_MLRGEA =
@@ -349,14 +358,15 @@ fitMLRGEA <- function(home.path = NULL,  # home directory. If null, getwd()
   stopCluster(cl) 
   
   end = Sys.time()
-  message(paste0('Model ended at ......',end,'\n'))
-  
+  message(paste0('Done!...................', Sys.time()))
+  message(paste0('End at..................', Sys.time()))
+ # message(paste0('........................................................................'))
   if(isTRUE(save))
   {
     message(paste0('saving files at......',output.path,'\n'))
     data.table::fwrite(  output_MLRGEA, paste0(output.path,'/Full_Results_',output_name ,".csv"))
   }
-  
+
   return(  output_MLRGEA)
 }
 
