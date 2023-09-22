@@ -2,7 +2,7 @@
 #'                                                                                                 #'
 #' Project........Environmental GWAS (eGWAS) for PandAnd -- Hackathon                              #'
 #' Title..........Multionomial Logistic Regression (MLR) for Genomic-Environment Association (GEA) #'
-#' Function....... fitMLRGEA(), version 0.0.1 (Sep 15 2023)                                        #'
+#' Function....... fitMLRGEA(), version 0.0.3 (Sep 22 2023)                                        #'
 #' Created at..... 06-03-2023                                                                      #'
 #' Updated at..... 09-22-2023                                                                      #'
 #' Author: G.Costa-Neto, germano.cneto<at>gmail.com                                                #'
