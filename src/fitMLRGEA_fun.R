@@ -355,7 +355,7 @@ fitMLRGEA <- function(home.path = NULL,  # home directory. If null, getwd()
         }
     )
   
-  stopCluster(cl) 
+  if(isTRUE(parallel)) {stopCluster(cl) }
   
   end = Sys.time()
   message(paste0('Done!...................', Sys.time()))
