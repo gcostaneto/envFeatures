@@ -166,7 +166,7 @@ fitMLRGEA <- function(home.path = NULL,  # home directory. If null, getwd()
 #    envo_X  <- envo_X[common_rows,]
     geno_X  <- data.frame(dummt=matrix(NA,nrow = nrow(geno_Y)))
     
-    EnvTraits = names(  envo_X )
+    EnvTraits = colnames(  envo_X )
     
     
     model_inputs = 
